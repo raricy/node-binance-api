@@ -3401,7 +3401,7 @@ let api = function Binance( options = {} ) {
 
         /**
         * Withdraws asset to given wallet id
-        * @param {string} asset - the asset symbol
+        * @param {string} coin - the asset symbol
         * @param {string} network
         * @param {string} address - the wallet to transfer it to
         * @param {number} amount - the amount to transfer
@@ -3410,8 +3410,8 @@ let api = function Binance( options = {} ) {
         * @param {string} name - the name to save the address as. Set falsy to prevent Binance saving to address book
         * @return {promise or undefined} - omitting the callback returns a promise
         */
-        withdraw: function ( asset, network, address, amount, addressTag = false, callback = false, name = false ) {
-            let params = { asset, address, amount, network };
+        withdraw: function ( coin, network, address, amount, addressTag = false, callback = false, name = false ) {
+            let params = { coin, address, amount, network };
             if ( name ) params.name = name;
             if ( addressTag ) params.addressTag = addressTag;
             if ( !callback ) {
