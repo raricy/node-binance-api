@@ -1232,7 +1232,7 @@ let api = function Binance( options = {} ) {
                 eventTime: data.E,
                 transactionTime: data.T,
                 ai: {
-                    j: data.ai.j
+                    dualSidePosition: data.ai.j
                 }
             }
         } else if ( data.ac ) {
