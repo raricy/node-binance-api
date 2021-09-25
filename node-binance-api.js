@@ -1226,15 +1226,27 @@ let api = function Binance( options = {} ) {
      * @return {object} - user friendly data type
      */
     const fUserConfigDataAccountUpdateConvertData = data => {
-        return {
-            eventType: data.e,
-            eventTime: data.E,
-            transactionTime: data.T,
-            ac: {
-                symbol: data.ac.s,
-                leverage: data.ac.l
+        if ( data.ai ) {
+            return {
+                eventType: data.e,
+                eventTime: data.E,
+                transactionTime: data.T,
+                ai: {
+                    j: data.ai.j
+                }
             }
-        };
+        } else if ( data.ac ) {
+            return {
+                eventType: data.e,
+                eventTime: data.E,
+                transactionTime: data.T,
+                ac: {
+                    symbol: data.ac.s,
+                    leverage: data.ac.l
+                }
+            };
+        }
+        
     };
 
     /**
@@ -3402,7 +3414,7 @@ let api = function Binance( options = {} ) {
         /**
         * Withdraws asset to given wallet id
         * @param {string} coin - the asset symbol
-        * @param {string} network
+        * @param {string} network - withdrawal network
         * @param {string} address - the wallet to transfer it to
         * @param {number} amount - the amount to transfer
         * @param {string} addressTag - and addtional address tag
@@ -3411,7 +3423,7 @@ let api = function Binance( options = {} ) {
         * @return {promise or undefined} - omitting the callback returns a promise
         */
         withdraw: function ( coin, network, address, amount, addressTag = false, callback = false, name = false ) {
-            let params = { coin, address, amount, network };
+            let params = { coin, network, address, amount };
             if ( name ) params.name = name;
             if ( addressTag ) params.addressTag = addressTag;
             if ( !callback ) {
