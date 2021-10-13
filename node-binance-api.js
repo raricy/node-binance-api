@@ -5418,6 +5418,14 @@ let api = function Binance( options = {} ) {
                 }
 
                 apiRequest( url + 'v1/listenKey', {}, function ( error, response ) {
+                    if ( error ) {
+                        if ( error.code && error.code === 'ESOCKETTIMEDOUT' )
+                            return reconnect();
+                        else if ( error.body ) {
+                            subscribed_callback( JSON.parse( error.body ) );
+                            return;
+                        }
+                    }
                     Binance.options.listenFutureKey = response.listenKey;
                     setTimeout( function userDataKeepAlive() { // keepalive
                         try {
